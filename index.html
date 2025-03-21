@@ -89,17 +89,21 @@
         <p id="message"></p>
     </div>
 
-    <!-- Nuevo Script para Bloquear Intentos Múltiples -->
+    <!-- Nuevo Script para Bloquear Intentos Múltiples (1 vez por hora) -->
     <script>
-        // Definir los premios (CAMBIA ESTOS VALORES CUANDO QUIERAS QUE SE REINICIE EL JUEGO)
+        // Definir los premios (puedes cambiarlos)
         let gameVersion = "v1"; // CAMBIA ESTE VALOR para permitir que jueguen otra vez
         let prizes = ["🐽", "🐽", "🐽", "🐽", "🐽", "☹️"];
         prizes = prizes.sort(() => Math.random() - 0.5);
         let revealed = false;
 
-        // Verificar si el usuario ya jugó esta versión
+        // Verificar si el usuario ya jugó y si ha pasado 1 hora
+        let lastPlayTime = localStorage.getItem("lastPlayTime");
         let lastGameVersion = localStorage.getItem("gameVersion");
-        if (lastGameVersion === gameVersion) {
+        let currentTime = new Date().getTime();
+        let oneHour = 60 * 60 * 1000; // 1 hora en milisegundos
+
+        if (lastGameVersion === gameVersion && lastPlayTime && currentTime - lastPlayTime < oneHour) {
             document.body.innerHTML = "<h1 style='color: gold; text-align: center; margin-top: 50px;'>🎰 Gracias por participar. Ya has jugado.</h1>";
         }
 
@@ -110,8 +114,9 @@
                 document.getElementById("message").textContent = "¡Gracias por jugar con Mavi!";
                 revealed = true;
 
-                // Guardar en localStorage que ya jugó esta versión
+                // Guardar en localStorage que ya jugó esta versión y el tiempo de juego
                 localStorage.setItem("gameVersion", gameVersion);
+                localStorage.setItem("lastPlayTime", currentTime);
             } else {
                 let allEstrellas = document.querySelectorAll(".estrella");
                 allEstrellas.forEach((estrella, index) => {
