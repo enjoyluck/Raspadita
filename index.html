@@ -96,7 +96,7 @@
     <script>
         // Definir los premios (puedes cambiarlos)
         let gameVersion = "v2"; // CAMBIA ESTE VALOR para permitir que jueguen otra vez
-        let prizes = ["$200", "$350", "$500", "$650", "$800", "MIL!!"];
+        let prizes = ["200", "350", "500", "650", "800", "1000"];
         prizes = prizes.sort(() => Math.random() - 0.5);
         let revealed = false;
 
@@ -114,7 +114,7 @@
             if (!revealed) {
                 element.textContent = prizes[Array.from(element.parentNode.children).indexOf(element)];
                 element.classList.add('revealed');
-                document.getElementById("message").textContent = "¡Gracias por jugar con Mavi!";
+                document.getElementById("message").textContent = "¡Gracias por jugar!";
                 revealed = true;
 
                 // Guardar en localStorage que ya jugó esta versión y el tiempo de juego
