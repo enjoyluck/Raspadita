@@ -88,6 +88,13 @@
             padding: 10px;
             border-radius: 10px;
         }
+
+        .bloqueado {
+            font-size: 28px;
+            color: gold;
+            text-shadow: 2px 2px 5px black;
+            margin-top: 50px;
+        }
     </style>
 </head>
 <body>
@@ -105,35 +112,3 @@
     </div>
 
     <script>
-        let gameVersion = "v13";
-        let prizes = ["200", "350", "500", "650", "800", "1000"];
-        prizes = prizes.sort(() => Math.random() - 0.5);
-        let firstRevealed = null;
-        let revealedCount = 0;
-
-        function revealPrize(element) {
-            if (!element.classList.contains("revealed")) {
-                let index = Array.from(element.parentNode.children).indexOf(element);
-                element.textContent = prizes[index];
-                element.classList.add("revealed");
-
-                if (!firstRevealed) {
-                    firstRevealed = element;
-                } else {
-                    firstRevealed.classList.add("celeste");
-                }
-                
-                revealedCount++;
-                
-                if (revealedCount === 2) {
-                    document.querySelectorAll(".estrella").forEach((estrella, i) => {
-                        estrella.textContent = prizes[i];
-                        estrella.classList.add("revealed");
-                    });
-                }
-            }
-        }
-    </script>
-
-</body>
-</html>
