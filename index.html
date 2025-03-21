@@ -77,7 +77,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>Raspadita de Casino</h1>
+        <h1>Gentileza de tu Cajero de confianza</h1>
         <div class="scratch-card">
             <div class="estrella" onclick="revealPrize(this)"></div>
             <div class="estrella" onclick="revealPrize(this)"></div>
@@ -89,10 +89,10 @@
         <p id="message"></p>
     </div>
 
-    <!-- Nuevo Script para Bloquear Intentos Múltiples (1 vez por hora) -->
+    <!-- Nuevo Script para Bloquear Intentos Múltiples (por tiempo) -->
     <script>
         // Definir los premios (puedes cambiarlos)
-        let gameVersion = "v1"; // CAMBIA ESTE VALOR para permitir que jueguen otra vez
+        let gameVersion = "v2"; // CAMBIA ESTE VALOR para permitir que jueguen otra vez
         let prizes = ["$200", "$350", "$500", "$650", "$800", "MIL!!"];
         prizes = prizes.sort(() => Math.random() - 0.5);
         let revealed = false;
