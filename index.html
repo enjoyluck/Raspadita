@@ -51,20 +51,22 @@
             font-weight: bold;
             cursor: pointer;
             box-shadow: 0px 0px 10px gold;
+            position: relative;
             animation: titilar 1s infinite alternate;
         }
-           .estrella::before /* Emoji inicial antes de hacer touch */
-.estrella::before {
-    content: "🍀"; /* Emoji inicial */
-    font-size: 40px;
-    position: absolute;
-}
 
-/* Cuando se revela el premio, el trébol desaparece */
-.estrella.revealed::before {
-    content: ""; /* Borra el trébol */
-}
-}
+        /* Mostrar el trébol antes de hacer touch */
+        .estrella::before {
+            content: "🍀"; /* Emoji inicial */
+            font-size: 40px;
+            position: absolute;
+        }
+
+        /* Cuando se revela el premio, el trébol desaparece */
+        .estrella.revealed::before {
+            content: ""; /* Borra el trébol */
+        }
+
         @keyframes titilar {
             0% { transform: scale(1); opacity: 1; }
             100% { transform: scale(1.1); opacity: 0.8; }
@@ -103,12 +105,12 @@
     <!-- Nuevo Script para Bloquear Intentos Múltiples (por tiempo) -->
     <script>
         // Definir los premios (puedes cambiarlos)
-        let gameVersion = "v4"; // CAMBIA ESTE VALOR para permitir que jueguen otra vez
+        let gameVersion = "v5"; // CAMBIA ESTE VALOR para permitir que jueguen otra vez
         let prizes = ["200", "350", "500", "650", "800", "1000"];
         prizes = prizes.sort(() => Math.random() - 0.5);
         let revealed = false;
 
-        // Verificar si el usuario ya jugó y si ha pasado 1 hora
+        // Verificar si el usuario ya jugó y si ha pasado 10 minutos
         let lastPlayTime = localStorage.getItem("lastPlayTime");
         let lastGameVersion = localStorage.getItem("gameVersion");
         let currentTime = new Date().getTime();
