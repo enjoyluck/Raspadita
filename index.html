@@ -104,7 +104,7 @@
         let lastPlayTime = localStorage.getItem("lastPlayTime");
         let lastGameVersion = localStorage.getItem("gameVersion");
         let currentTime = new Date().getTime();
-        let oneHour = 10 * 60 * 1000; // 1 hora en milisegundos
+        let oneHour = 10 * 60 * 1000; // 10 min en milisegundos
 
         if (lastGameVersion === gameVersion && lastPlayTime && currentTime - lastPlayTime < oneHour) {
             document.body.innerHTML = "<h1 style='color: gold; text-align: center; margin-top: 50px;'>🎰 Gracias por participar. Ya has jugado.</h1>";
