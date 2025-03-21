@@ -6,15 +6,17 @@
     <title>Gentileza Casino Konabet</title>
     <style>
         body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background: url('https://i.imgur.com/ky0lFCF.jpeg') no-repeat center center fixed;
-    background-size: cover; /* Ajusta la imagen sin distorsión */
-    background-color: #004d00; /* Color de respaldo verde oscuro */
-    min-height: 100vh; /* Evita problemas en móviles */
-    margin: 0;
-    color: gold;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('https://i.imgur.com/ky0lFCF.jpeg');
+            background-size: cover; /* Ajusta la imagen sin distorsión */
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh; /* Hace que el fondo cubra toda la pantalla */
+            margin: 0;
+            color: gold;
         }
+
         .container {
             margin-top: 50px;
         }
@@ -86,17 +88,30 @@
         </div>
         <p id="message"></p>
     </div>
+
+    <!-- Nuevo Script para Bloquear Intentos Múltiples -->
     <script>
-        let prizes = ["🆘", "🐽", "🐽", "🐽", "🐽", "☹️"];
+        // Definir los premios (CAMBIA ESTOS VALORES CUANDO QUIERAS QUE SE REINICIE EL JUEGO)
+        let gameVersion = "v1"; // CAMBIA ESTE VALOR para permitir que jueguen otra vez
+        let prizes = ["🐽", "🐽", "🐽", "🐽", "🐽", "☹️"];
         prizes = prizes.sort(() => Math.random() - 0.5);
         let revealed = false;
+
+        // Verificar si el usuario ya jugó esta versión
+        let lastGameVersion = localStorage.getItem("gameVersion");
+        if (lastGameVersion === gameVersion) {
+            document.body.innerHTML = "<h1 style='color: gold; text-align: center; margin-top: 50px;'>🎰 Gracias por participar. Ya has jugado.</h1>";
+        }
 
         function revealPrize(element) {
             if (!revealed) {
                 element.textContent = prizes[Array.from(element.parentNode.children).indexOf(element)];
                 element.classList.add('revealed');
-                document.getElementById("message").textContent = "¡Gracias por jugar con Mavi!"
+                document.getElementById("message").textContent = "¡Gracias por jugar con Mavi!";
                 revealed = true;
+
+                // Guardar en localStorage que ya jugó esta versión
+                localStorage.setItem("gameVersion", gameVersion);
             } else {
                 let allEstrellas = document.querySelectorAll(".estrella");
                 allEstrellas.forEach((estrella, index) => {
@@ -106,5 +121,6 @@
             }
         }
     </script>
+
 </body>
 </html>
