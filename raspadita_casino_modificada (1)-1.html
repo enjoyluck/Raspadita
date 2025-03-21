@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raspadita de Casino</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('https://i.imgur.com/004uRpQ.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            color: gold;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        h1 {
+            font-size: 24px;
+            text-shadow: 2px 2px 5px red;
+            background: rgba(0, 0, 0, 0.6);
+            display: inline-block;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .scratch-card {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .estrella {
+            width: 90px;
+            height: 90px;
+            background-color: gold;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0px 0px 10px gold;
+            animation: titilar 1s infinite alternate;
+        }
+
+        @keyframes titilar {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .revealed {
+            background-color: darkgoldenrod !important;
+            animation: none;
+        }
+
+        p#message {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.6);
+            display: inline-block;
+            padding: 10px;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Raspadita de Casino</h1>
+        <div class="scratch-card">
+            <div class="estrella" onclick="revealPrize(this)"></div>
+            <div class="estrella" onclick="revealPrize(this)"></div>
+            <div class="estrella" onclick="revealPrize(this)"></div>
+            <div class="estrella" onclick="revealPrize(this)"></div>
+            <div class="estrella" onclick="revealPrize(this)"></div>
+            <div class="estrella" onclick="revealPrize(this)"></div>
+        </div>
+        <p id="message"></p>
+    </div>
+    <script>
+        let prizes = [300, 500, 700, 800, 1000, "☹️"];
+        prizes = prizes.sort(() => Math.random() - 0.5);
+        let revealed = false;
+
+        function revealPrize(element) {
+            if (!revealed) {
+                element.textContent = prizes[Array.from(element.parentNode.children).indexOf(element)];
+                element.classList.add('revealed');
+                document.getElementById("message").textContent = "¡Gracias por jugar!";
+                revealed = true;
+            } else {
+                let allEstrellas = document.querySelectorAll(".estrella");
+                allEstrellas.forEach((estrella, index) => {
+                    estrella.textContent = prizes[index];
+                    estrella.classList.add('revealed');
+                });
+            }
+        }
+    </script>
+</body>
+</html>
