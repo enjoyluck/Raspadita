@@ -9,10 +9,10 @@
             font-family: Arial, sans-serif;
             text-align: center;
             background-image: url('https://i.imgur.com/Rpxamzz.jpeg');
-            background-size: cover; /* Ajusta la imagen sin distorsión */
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            height: 100vh; /* Hace que el fondo cubra toda la pantalla */
+            height: 100vh;
             margin: 0;
             color: gold;
         }
@@ -55,16 +55,14 @@
             animation: titilar 1s infinite alternate;
         }
 
-        /* Mostrar el trébol antes de hacer touch */
         .estrella::before {
-            content: "⚽"; /* Emoji inicial */
+            content: "⚽";
             font-size: 40px;
             position: absolute;
         }
 
-        /* Cuando se revela el premio, el trébol desaparece */
         .estrella.revealed::before {
-            content: ""; /* Borra el trébol */
+            content: "";
         }
 
         @keyframes titilar {
@@ -74,7 +72,11 @@
 
         .revealed {
             background-color: darkgoldenrod !important;
-            animation: yes;
+        }
+
+        .celeste {
+            background-color: skyblue !important;
+            color: white !important;
         }
 
         p#message {
@@ -102,40 +104,33 @@
         <p id="message"></p>
     </div>
 
-    <!-- Nuevo Script para Bloquear Intentos Múltiples (por tiempo) -->
     <script>
-        // Definir los premios (puedes cambiarlos)
-        let gameVersion = "v12"; // CAMBIA ESTE VALOR para permitir que jueguen otra vez
+        let gameVersion = "v12";
         let prizes = ["200", "350", "500", "650", "800", "1000"];
         prizes = prizes.sort(() => Math.random() - 0.5);
-        let revealed = false;
-
-        // Verificar si el usuario ya jugó y si ha pasado 10 minutos
-        let lastPlayTime = localStorage.getItem("lastPlayTime");
-        let lastGameVersion = localStorage.getItem("gameVersion");
-        let currentTime = new Date().getTime();
-        let oneHour = 10 * 60 * 1000; // 10 min en milisegundos
-
-        if (lastGameVersion === gameVersion && lastPlayTime && currentTime - lastPlayTime < oneHour) {
-            document.body.innerHTML = "<h1 style='color: gold; text-align: center; margin-top: 50px;'>🎰 Gracias por participar. Ya has jugado.</h1>";
-        }
+        let firstRevealed = null;
+        let revealedCount = 0;
 
         function revealPrize(element) {
-            if (!revealed) {
-                element.textContent = prizes[Array.from(element.parentNode.children).indexOf(element)];
-                element.classList.add('revealed');
-                document.getElementById("message").textContent = "¡Gracias por jugar!";
-                revealed = true;
+            if (!element.classList.contains("revealed")) {
+                let index = Array.from(element.parentNode.children).indexOf(element);
+                element.textContent = prizes[index];
+                element.classList.add("revealed");
 
-                // Guardar en localStorage que ya jugó esta versión y el tiempo de juego
-                localStorage.setItem("gameVersion", gameVersion);
-                localStorage.setItem("lastPlayTime", currentTime);
-            } else {
-                let allEstrellas = document.querySelectorAll(".estrella");
-                allEstrellas.forEach((estrella, index) => {
-                    estrella.textContent = prizes[index];
-                    estrella.classList.add('revealed');
-                });
+                if (!firstRevealed) {
+                    firstRevealed = element;
+                } else {
+                    firstRevealed.classList.add("celeste");
+                }
+                
+                revealedCount++;
+                
+                if (revealedCount === 2) {
+                    document.querySelectorAll(".estrella").forEach((estrella, i) => {
+                        estrella.textContent = prizes[i];
+                        estrella.classList.add("revealed");
+                    });
+                }
             }
         }
     </script>
