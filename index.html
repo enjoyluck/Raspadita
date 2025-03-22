@@ -21,6 +21,102 @@
             margin-top: 50px;
         }
 
+        h1 {
+            font-size: 24px;
+            text-shadow: 2px 2px 5px red;
+            background: rgba(0, 0, 0, 0.6);
+            display: inline-block;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .scratch-card {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .estrella {
+            width: 120px;
+            height: 120px;
+            background-color: darkgoldenrod;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0px 0px 10px gold;
+            position: relative;
+            animation: titilar 1s infinite alternate;
+        }
+
+        .estrella::before {
+            content: "⚽";
+            font-size: 40px;
+            position: absolute;
+        }
+
+        .estrella.revealed::before {
+            content: "";
+        }
+
+        @keyframes titilar {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .revealed {
+            background-color: darkgoldenrod !important;
+        }
+
+        .celeste {
+            background-color: skyblue !important;
+            color: white !important;
+        }
+
+        p#message {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.6);
+            display: inline-block;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .bloqueado {
+            font-size: 28px;
+            color: gold;
+            text-shadow: 2px 2px 5px black;
+            margin-top: 50px;
+        }
+
+        /* ✨ **ESTILO PARA "SÁBADO" (Texto amarillo agregado)** ✨ */
+        .sabado {
+            text-align: center;
+            font-size: 40px; /* Tamaño grande */
+            font-family: Arial, sans-serif;
+            font-weight: bold; /* Texto en negrita */
+            color: yellow; /* 🔸 Color amarillo 🔸 */
+            text-shadow: 2px 2px 10px rgba(255, 215, 0, 1); /* Brillo */
+        }
+
+        /* Efecto titilante y brillante */
+        @keyframes titilar-sabado {
+            0% { opacity: 1; text-shadow: 0 0 10px yellow, 0 0 20px yellow; }
+            50% { opacity: 0.6; text-shadow: 0 0 20px yellow, 0 0 30px yellow; }
+            100% { opacity: 1; text-shadow: 0 0 10px yellow, 0 0 20px yellow; }
+        }
+
+        .brillante {
+            animation: titilar-sabado 1s infinite alternate; /* Hace que el texto brille y titile */
+        }
+    
         /* ✨ Estilo para el título brillante (igual que "SÁBADO") ✨ */
         .titulo-brillante {
             text-align: center;
@@ -31,31 +127,12 @@
             text-shadow: 0 0 10px yellow, 0 0 20px yellow, 0 0 30px yellow; /* Borde amarillo brillante */
             animation: titilar 1s infinite alternate; /* Hace que brille y titile */
         }
-
-        /* ✨ Estilo para "SÁBADO" ✨ */
-        .sabado {
-            text-align: center;
-            font-size: 40px;
-            font-family: Arial, sans-serif;
-            font-weight: bold;
-            color: gold;
-            text-shadow: 0 0 10px yellow, 0 0 20px yellow, 0 0 30px yellow;
-            animation: titilar 1s infinite alternate;
-        }
-
-        /* Efecto titilante y brillante */
-        @keyframes titilar {
-            0% { opacity: 1; text-shadow: 0 0 10px yellow, 0 0 20px yellow, 0 0 30px yellow; }
-            50% { opacity: 0.6; text-shadow: 0 0 20px gold, 0 0 30px gold, 0 0 40px gold; }
-            100% { opacity: 1; text-shadow: 0 0 10px yellow, 0 0 20px yellow, 0 0 30px yellow; }
-        }
-    </style>
+        </style>
+        
 </head>
 <body>
     <div class="container">
-        <!-- 🔥 Modificación aquí: Se agregó la clase "titulo-brillante" -->
         <h1 class="titulo-brillante">Gentileza de tu Cajero de confianza</h1>
-
         <div class="scratch-card">
             <div class="estrella" onclick="revealPrize(this)"></div>
             <div class="estrella" onclick="revealPrize(this)"></div>
@@ -68,7 +145,7 @@
     </div>
 
     <script>
-        let gameVersion = "v44";
+        let gameVersion = "v4"; // Cambia este valor para resetear manualmente
         let prizes = ["200", "350", "500", "650", "800", "1000"];
         prizes = prizes.sort(() => Math.random() - 0.5);
         let firstRevealed = null;
@@ -132,8 +209,8 @@
         }
     </script>
 
-    <!-- 🔥 Texto de "SÁBADO" con efecto brillante -->
-    <p class="sabado">SÁBADO</p>
+    <!-- 🔥 **Texto agregado para SÁBADO con efecto brillante** 🔥 -->
+    <p class="sabado brillante">SÁBADO</p>
 
 </body>
 </html>
