@@ -112,43 +112,43 @@
     </div>
 
     <script>
-        let gameVersion = "v3"; // Cambia este valor para resetear manualmente
+        let gameVersion = "v4"; // Cambia este valor para resetear manualmente
         let prizes = ["200", "350", "500", "650", "800", "1000"];
         prizes = prizes.sort(() => Math.random() - 0.5);
         let firstRevealed = null;
         let revealedCount = 0;
         let played = false;
 
-        // Verificar si el usuario ya jugó
         let lastPlayTime = localStorage.getItem("lastPlayTime");
         let lastGameVersion = localStorage.getItem("gameVersion");
         let storedPrizes = JSON.parse(localStorage.getItem("storedPrizes"));
         let currentTime = new Date().getTime();
         let tenMinutes = 10 * 60 * 1000;
 
-        // Si el usuario ya jugó y no han pasado 10 minutos, mostrar mensaje de bloqueo
+        // Si el usuario ya jugó y no han pasado 10 minutos, bloquear
         if (lastGameVersion === gameVersion && lastPlayTime && currentTime - lastPlayTime < tenMinutes) {
             document.body.innerHTML = "<h1 class='bloqueado'>⚽ Ya has jugado Gracias ⚽</h1>";
         } 
-        // Si el usuario ya jugó y refresca, mostrar los premios en pantalla
-        else if (lastGameVersion === gameVersion && storedPrizes) {
+        else {
             document.addEventListener("DOMContentLoaded", () => {
                 let estrellas = document.querySelectorAll(".estrella");
-                estrellas.forEach((estrella, index) => {
-                    estrella.textContent = storedPrizes[index];
-                    estrella.classList.add("revealed");
-                });
-                document.getElementById("message").textContent = "¡Gracias por jugar!";
+                if (lastGameVersion === gameVersion && storedPrizes) {
+                    estrellas.forEach((estrella, index) => {
+                        estrella.dataset.prize = storedPrizes[index]; // Se guarda el premio en un atributo oculto
+                    });
+                    document.getElementById("message").textContent = "¡Gracias por jugar!";
+                } else {
+                    estrellas.forEach((estrella, index) => {
+                        estrella.dataset.prize = prizes[index]; // Se guarda el premio en un atributo oculto
+                    });
+                }
             });
-        } 
-        // Si no ha jugado, permitir el juego
-        else {
+
             function revealPrize(element) {
-                if (played) return; // Si ya jugó, no puede volver a tocar
-                
+                if (played) return; 
+
                 if (!element.classList.contains("revealed")) {
-                    let index = Array.from(element.parentNode.children).indexOf(element);
-                    element.textContent = prizes[index];
+                    element.textContent = element.dataset.prize; 
                     element.classList.add("revealed");
 
                     if (!firstRevealed) {
@@ -160,12 +160,11 @@
                     revealedCount++;
                     
                     if (revealedCount === 2) {
-                        document.querySelectorAll(".estrella").forEach((estrella, i) => {
-                            estrella.textContent = prizes[i];
+                        document.querySelectorAll(".estrella").forEach((estrella) => {
+                            estrella.textContent = estrella.dataset.prize;
                             estrella.classList.add("revealed");
                         });
 
-                        // Guardar en localStorage que ya jugó
                         played = true;
                         localStorage.setItem("gameVersion", gameVersion);
                         localStorage.setItem("lastPlayTime", currentTime);
