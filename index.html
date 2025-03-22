@@ -21,18 +21,82 @@
             margin-top: 50px;
         }
 
-        /* ✨ **Nuevo estilo para el título brillante** ✨ */
-        .titulo-brillante {
-            text-align: center;
-            font-size: 32px; /* Un poco más pequeño que "SÁBADO" */
-            font-family: Arial, sans-serif;
-            font-weight: bold; /* Texto en negrita */
-            color: yellow; /* 🔸 Color amarillo 🔸 */
-            text-shadow: 2px 2px 10px rgba(255, 215, 0, 1); /* Brillo */
-            animation: titilar-sabado 1s infinite alternate; /* Hace que brille y titile */
+        h1 {
+            font-size: 24px;
+            text-shadow: 2px 2px 5px red;
+            background: rgba(0, 0, 0, 0.6);
+            display: inline-block;
+            padding: 10px;
+            border-radius: 10px;
         }
 
-        /* ✨ **Estilo para "SÁBADO"** ✨ */
+        .scratch-card {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .estrella {
+            width: 120px;
+            height: 120px;
+            background-color: darkgoldenrod;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0px 0px 10px gold;
+            position: relative;
+            animation: titilar 1s infinite alternate;
+        }
+
+        .estrella::before {
+            content: "⚽";
+            font-size: 40px;
+            position: absolute;
+        }
+
+        .estrella.revealed::before {
+            content: "";
+        }
+
+        @keyframes titilar {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .revealed {
+            background-color: darkgoldenrod !important;
+        }
+
+        .celeste {
+            background-color: skyblue !important;
+            color: white !important;
+        }
+
+        p#message {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.6);
+            display: inline-block;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .bloqueado {
+            font-size: 28px;
+            color: gold;
+            text-shadow: 2px 2px 5px black;
+            margin-top: 50px;
+        }
+
+        /* ✨ **ESTILO PARA "SÁBADO" (Texto amarillo agregado)** ✨ */
         .sabado {
             text-align: center;
             font-size: 40px; /* Tamaño grande */
@@ -56,10 +120,7 @@
 </head>
 <body>
     <div class="container">
-        <!-- 🔥 **ANTES:** <h1>Gentileza de tu Cajero de confianza</h1> -->
-        <!-- 🔥 **AHORA:** Se agregó la clase "titulo-brillante" -->
-        <h1 class="titulo-brillante">Gentileza de tu Cajero de confianza</h1>
-
+        <h1>Gentileza de tu Cajero de confianza</h1>
         <div class="scratch-card">
             <div class="estrella" onclick="revealPrize(this)"></div>
             <div class="estrella" onclick="revealPrize(this)"></div>
@@ -136,7 +197,7 @@
         }
     </script>
 
-    <!-- 🔥 **Texto de "SÁBADO" con efecto brillante** 🔥 -->
+    <!-- 🔥 **Texto agregado para SÁBADO con efecto brillante** 🔥 -->
     <p class="sabado brillante">SÁBADO</p>
 
 </body>
