@@ -21,25 +21,25 @@
             margin-top: 50px;
         }
 
-        /* 🔹 **ANTES:** Estilo del título sin brillo */
-        h1 {
-            font-size: 24px;
-            text-shadow: 2px 2px 5px red;
-            background: rgba(0, 0, 0, 0.6);
-            display: inline-block;
-            padding: 10px;
-            border-radius: 10px;
+        /* ✨ **Nuevo estilo para el título brillante** ✨ */
+        .titulo-brillante {
+            text-align: center;
+            font-size: 32px; /* Un poco más pequeño que "SÁBADO" */
+            font-family: Arial, sans-serif;
+            font-weight: bold; /* Texto en negrita */
+            color: yellow; /* 🔸 Color amarillo 🔸 */
+            text-shadow: 2px 2px 10px rgba(255, 215, 0, 1); /* Brillo */
+            animation: titilar-sabado 1s infinite alternate; /* Hace que brille y titile */
         }
 
-        /* ✨ **NUEVO ESTILO PARA EL TÍTULO BRILLANTE** ✨ */
-        .titulo-brillante {
+        /* ✨ **Estilo para "SÁBADO"** ✨ */
+        .sabado {
             text-align: center;
             font-size: 40px; /* Tamaño grande */
             font-family: Arial, sans-serif;
             font-weight: bold; /* Texto en negrita */
             color: yellow; /* 🔸 Color amarillo 🔸 */
             text-shadow: 2px 2px 10px rgba(255, 215, 0, 1); /* Brillo */
-            animation: titilar-sabado 1s infinite alternate; /* Hace que brille y titile */
         }
 
         /* Efecto titilante y brillante */
@@ -49,6 +49,9 @@
             100% { opacity: 1; text-shadow: 0 0 10px yellow, 0 0 20px yellow; }
         }
 
+        .brillante {
+            animation: titilar-sabado 1s infinite alternate; /* Hace que el texto brille y titile */
+        }
     </style>
 </head>
 <body>
@@ -69,7 +72,7 @@
     </div>
 
     <script>
-        let gameVersion = "v5"; // Cambia este valor para resetear manualmente
+        let gameVersion = "v4"; // Cambia este valor para resetear manualmente
         let prizes = ["200", "350", "500", "650", "800", "1000"];
         prizes = prizes.sort(() => Math.random() - 0.5);
         let firstRevealed = null;
