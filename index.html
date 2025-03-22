@@ -60,3 +60,80 @@
             <div class="estrella" onclick="revealPrize(this)"></div>
             <div class="estrella" onclick="revealPrize(this)"></div>
             <div class="estrella" onclick="revealPrize(this)"></div>
+            <div class="estrella" onclick="revealPrize(this)"></div>
+            <div class="estrella" onclick="revealPrize(this)"></div>
+            <div class="estrella" onclick="revealPrize(this)"></div>
+        </div>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        let gameVersion = "v4";
+        let prizes = ["200", "350", "500", "650", "800", "1000"];
+        prizes = prizes.sort(() => Math.random() - 0.5);
+        let firstRevealed = null;
+        let revealedCount = 0;
+        let played = false;
+
+        let lastPlayTime = localStorage.getItem("lastPlayTime");
+        let lastGameVersion = localStorage.getItem("gameVersion");
+        let storedPrizes = JSON.parse(localStorage.getItem("storedPrizes"));
+        let currentTime = new Date().getTime();
+        let tenMinutes = 10 * 60 * 1000;
+
+        if (lastGameVersion === gameVersion && lastPlayTime && currentTime - lastPlayTime < tenMinutes) {
+            document.body.innerHTML = "<h1 class='bloqueado'>⚽ Ya has jugado Gracias ⚽</h1>";
+        } 
+        else {
+            document.addEventListener("DOMContentLoaded", () => {
+                let estrellas = document.querySelectorAll(".estrella");
+                if (lastGameVersion === gameVersion && storedPrizes) {
+                    estrellas.forEach((estrella, index) => {
+                        estrella.dataset.prize = storedPrizes[index];
+                    });
+                    document.getElementById("message").textContent = "¡Gracias por jugar!";
+                } else {
+                    estrellas.forEach((estrella, index) => {
+                        estrella.dataset.prize = prizes[index];
+                    });
+                }
+            });
+
+            function revealPrize(element) {
+                if (played) return; 
+
+                if (!element.classList.contains("revealed")) {
+                    element.textContent = element.dataset.prize; 
+                    element.classList.add("revealed");
+
+                    if (!firstRevealed) {
+                        firstRevealed = element;
+                    } else {
+                        firstRevealed.classList.add("celeste");
+                    }
+                    
+                    revealedCount++;
+                    
+                    if (revealedCount === 2) {
+                        document.querySelectorAll(".estrella").forEach((estrella) => {
+                            estrella.textContent = estrella.dataset.prize;
+                            estrella.classList.add("revealed");
+                        });
+
+                        played = true;
+                        localStorage.setItem("gameVersion", gameVersion);
+                        localStorage.setItem("lastPlayTime", currentTime);
+                        localStorage.setItem("storedPrizes", JSON.stringify(prizes));
+
+                        document.getElementById("message").textContent = "¡Gracias por jugar!";
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- 🔥 Texto de "SÁBADO" con efecto brillante -->
+    <p class="sabado">SÁBADO</p>
+
+</body>
+</html>
