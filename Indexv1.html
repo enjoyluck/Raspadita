@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gentileza de tu Cajero de confianza</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-image: url('https://raw.githubusercontent.com/enjoyluck/Raspadita.online/refs/heads/main/raspa.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 100vh;
+            margin: 0;
+            color: silver;
+        }
+
+        .container {
+            margin-top: 50px;
+        }
+
+        h1 {
+            font-size: 24px;
+            text-shadow: 2px 2px 5px red;
+            display: inline-block;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .scratch-card {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .estrella {
+            width: 120px;
+            height: 120px;
+            background-color: gold;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: gold;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0px 0px 10px gold;
+            position: relative;
+            animation: titilar 1s infinite alternate;
+        }
+
+        .estrella::before {
+            content: "🎰"; 
+            font-size: 40px;
+            position: absolute;
+        }
+
+        .estrella.revealed::before {
+            content: none;
+            background-image: none;
+        }
+
+        @keyframes titilar {
+            0% { transform: scale(1); opacity: 1; }
+            100% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .revealed {
+            background-color: gold !important;
+        }
+
+        .celeste {
+            background-color: skyblue !important;
+            color: white !important;
+        }
+
+        p#message {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            display: inline-block;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .bloqueado {
+            font-size: 28px;
+            color: gold;
+            text-shadow: 2px 2px 5px black;
+            margin-top: 50px;
+        }
+
+        .sabado {
+            text-align: center;
+            font-size: 50px;
+            font-weight: bold;
+            color: silver;
+            text-shadow: 2px 2px 10px rgba(255, 215, 0, 1);
+          animation: titilar 1s infinite alternate;
+        }
+
+        .titulo-brillante {
+            text-align: center;
+            font-size: 36px;
+            font-weight: bold;
+            color: silver;
+            text-shadow: 0 0 10px yellow, 0 0 20px red, 0 0 30px red;
+            animation: titilar 1s infinite alternate;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Información del creador */
+        .creador {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            color: silver;
+            font-size: 14px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .creador img {
+            width: 20px;
+            height: 20px;
+            margin-left: 5px;
+            filter: grayscale(200%) brightness(1.2) contrast(1.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="titulo-brillante">Gentileza de tu Cajero de confianza</h1>
+        <div class="scratch-card">
+            <div class="estrella" onclick="revealPrize(this)"></div>
+            <div class="estrella" onclick="revealPrize(this)"></div>
+            <div class="estrella" onclick="revealPrize(this)"></div>
+            <div class="estrella" onclick="revealPrize(this)"></div>
+            <div class="estrella" onclick="revealPrize(this)"></div>
+            <div class="estrella" onclick="revealPrize(this)"></div>
+        </div>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        let gameVersion = "76"; 
+        let prizes = ["200", "300", "400", "10%", "15%", "10%"];
+        prizes = prizes.sort(() => Math.random() - 0.5);
+        let firstRevealed = null;
+        let revealedCount = 0;
+        let played = false;
+
+        let lastPlayTime = localStorage.getItem("lastPlayTime");
+        let lastGameVersion = localStorage.getItem("gameVersion");
+        let storedPrizes = JSON.parse(localStorage.getItem("storedPrizes"));
+        let currentTime = new Date().getTime();
+        let tenMinutes = 60 * 60 * 1000;
+
+        if (lastGameVersion === gameVersion && lastPlayTime && currentTime - lastPlayTime < tenMinutes) {
+            document.body.innerHTML = "<h1 class='bloqueado'> Ya has jugado Gracias 🙇</h1>" +
+            "<div class='creador'>" +
+            "By Martin Clerici" +
+            "<a href='https://wa.me/541159045035' target='_blank'>" +
+            "<img src='https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png' alt='WhatsApp Creador' class='whatsapp-icon'>" +
+            "</a>" +
+            "</div>";
+        } 
+        else {
+            document.addEventListener("DOMContentLoaded", () => {
+                let estrellas = document.querySelectorAll(".estrella");
+                if (lastGameVersion === gameVersion && storedPrizes) {
+                    estrellas.forEach((estrella, index) => {
+                        estrella.dataset.prize = storedPrizes[index];
+                    });
+                    document.getElementById("message").textContent = "¡Gracias por jugar!";
+                } else {
+                    estrellas.forEach((estrella, index) => {
+                        estrella.dataset.prize = prizes[index];
+                    });
+                }
+            });
+
+            function revealPrize(element) {
+                if (played) return; 
+
+                if (!element.classList.contains("revealed")) {
+                    element.textContent = element.dataset.prize; 
+                    element.classList.add("revealed");
+
+                    if (!firstRevealed) {
+                        firstRevealed = element;
+                    } else {
+                        firstRevealed.classList.add("celeste");
+                    }
+
+                    revealedCount++;
+
+                    if (revealedCount === 2) {
+                        document.querySelectorAll(".estrella").forEach((estrella) => {
+                            estrella.textContent = estrella.dataset.prize;
+                            estrella.classList.add("revealed");
+                        });
+
+                        played = true;
+                        localStorage.setItem("gameVersion", gameVersion);
+                        localStorage.setItem("lastPlayTime", currentTime);
+                        localStorage.setItem("storedPrizes", JSON.stringify(prizes));
+
+                        document.getElementById("message").textContent = "¡Gracias por jugar!";
+                    }
+                }
+            }
+        }
+    </script>
+
+    <p class="sabado brillante">KONABET</p>
+
+    <div class="creador">
+        By Martin Clerici
+        <a href="https://wa.me/541159045035" target="_blank">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png" alt="WhatsApp Creador" class="whatsapp-icon">
+        </a>
+    </div>
+</body>
+</html>
