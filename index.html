@@ -96,10 +96,11 @@
         }
         /*FELICITACIONES*/
         .bloqueado {
-            font-size: 28px;
-            color: Black ;
+            font-size: 35px;
+            color: Golden ;
             text-shadow: 2px 5px 15px white;
             margin-top: 300px;
+            animation: titilar 1s infinite alternate;
         }
 
         .sabado {
@@ -199,6 +200,17 @@
 </head>
 <body>
   <script>
+    document.body.innerHTML = `
+        <h1 class='bloqueado'>Este juego está temporalmente fuera de servicio.</h1>
+        <div class='creador'>
+            By Martin Clerici
+            <a href='https://wa.me/541159045035' target='_blank'>
+                <img src='https://upload.wikimedia.org/wikipedia/commons/5/5e/WhatsApp_icon.png' alt='WhatsApp Creador' class='whatsapp-icon'>
+            </a>
+        </div>
+    `;
+    
+    /*
         let gameVersion = "0"; 
         let prizes = ["200", "💩", "5%", "10%", "15%", "10%"];
         prizes = prizes.sort(() => Math.random() - 0.5);
@@ -266,7 +278,9 @@
                 localStorage.setItem("selectedPrize", prizes[index]);
             }
         }
+            */
     </script>
+           
             <div class="footer-text">
     Gentileza de tu Cajero de Confianza
 </div>
